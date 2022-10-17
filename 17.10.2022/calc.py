@@ -11,7 +11,7 @@ while True:
             print(number1 - number2)
         case '*':
             print(number1*number2)
-        case '/':
+        case '/':   
             print(number1 / number2)
         case 'exit':
             break
