@@ -3,13 +3,17 @@ from watchdog.events import FileSystemEventHandler
 
 import pathlib
 import time
+import shutil
 
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         for filename in [file for file in folder_to_track.iterdir()]:
             ext = self.get_extension(filename)
             if ext is not None:
+                print(ext)
                 new_destination = self.get_destination(filename,ext)
+                
+                shutil.move(filename, new_destination)
             else:
                 print(ext)
                 print("No files were moved")
@@ -19,9 +23,7 @@ class MyHandler(FileSystemEventHandler):
         ext = pathlib.Path(filename).suffix
         if ext.lower() in extensions:
             return ext
-# This method is going to generete the new file destination path
-# and is going to use the extension of the file
-# if you do not understand call me: 0888 105 100 / 30Eur/min
+
     def get_destination(self, filename, ext):
         pdfs_folder=pathlib.Path(r"D:\test\pdfs")
         pdfs_folder.mkdir(parents=True, exist_ok=True)
@@ -32,6 +34,17 @@ class MyHandler(FileSystemEventHandler):
         documents_folder=pathlib.Path(r"D:\test\documents")
         documents_folder.mkdir(parents=True, exist_ok=True)
 
+        match ext:
+            case '.pdf':
+                new_destination = pdfs_folder / filename.name
+            case '.jpg','.png','.jpeg':
+                new_destination = images_folder / filename.name
+            case default:
+                new_destination = folder_to_track / filename.name
+        
+        return new_destination
+
+
 
 if __name__ == "__main__":
     folder_to_track=pathlib.Path(r"D:\test")
@@ -40,9 +53,9 @@ if __name__ == "__main__":
     observer.schedule(event_handler,
                 str(folder_to_track.absolute()),recursive=True)
     observer.start()
-try:
-    while True:
-        time.sleep(5)
-except:
-    observer.stop()
-observer.join()
+    try:
+        while True:
+            time.sleep(5)
+    except:
+        observer.stop()
+    observer.join()
