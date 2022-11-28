@@ -22,7 +22,7 @@ def get_even_letters(message):
 # Get the letters of the message, which are on the odd indexes
 def get_odd_letters(message):
     odd_letters = []
-    for i in range(0,len(message)):
+    for i in range(0, len(message)):
         if not is_even(i):
             odd_letters.append(message[i])
     return odd_letters
@@ -31,25 +31,30 @@ def swap_letters(message):
     letter_list = []
     if not is_even(len(message)):
         message = message +'x'
+
     even_letters = get_even_letters(message)
+
     odd_letters = get_odd_letters(message)
 
     for i in range(0, int(len(message)/2)):
         letter_list.append(odd_letters[i])
         letter_list.append(even_letters[i])
+
     new_message = ''.join(letter_list)
     return new_message
-    
+
 root = Tk()
 
 while True:
     task = get_task()
     if task == 'encrypt':
         message = get_message()
-        messagebox.showinfo('Message',f'Ciphertext of the secret message is {message}')
+        new_message = swap_letters(message)
+        messagebox.showinfo('Message',f'Ciphertext of the secret message is {new_message}')
     elif task == 'decrypt':
         message = get_message()
-        messagebox.showinfo('Message',f'Plaintext of the secret message is {message}')
+        decrypt_message = swap_letters(message)
+        messagebox.showinfo('Message',f'Plaintext of the secret message is {decrypt_message}')
     else:
         break
 
