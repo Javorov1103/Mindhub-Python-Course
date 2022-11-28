@@ -8,6 +8,23 @@ def get_message():
     message = simpledialog.askstring('Message','Enter the secret message')
     return message
 
+def is_even(number):
+    return number % 2 == 0
+
+def get_even_letters(message):
+    even_letters = []
+    for i in range(0, len(message)):
+        if is_even(i):
+            even_letters.append(message[i])
+    return even_letters
+
+def get_odd_letters(message):
+    odd_letters = []
+    for i in range(0,len(message)):
+        if not is_even(i):
+            odd_letters.append(message[i])
+    return odd_letters
+
 root = Tk()
 
 while True:
