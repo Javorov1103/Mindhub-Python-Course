@@ -74,9 +74,7 @@ def snap(event):
     global player2_score
     
     valid = False
-    
     c.delete(shape)
-    
     if previous_color == current_color:
         valid = True
     if valid:
@@ -87,6 +85,22 @@ def snap(event):
             
         shape = c.create_text(200,200, text='SNAP!, You score 1 point!')
     else:
+        if event.char == 'p':
+            player1_score = player1_score-1
+        else:
+            player2_score = player2_score-1
             
-        
+        shape = c.create_text(200,200, text='WRONG!, You lose 1 point!') 
+    
+    c.pack()
+    root.update_idletasks()
+    time.sleep(1)
+    
+root.after(3000, next_shape)
+
+c.bind('q', snap)
+c.bind('p', snap)
+c.focus_set()
+
+root.mainloop()
             
