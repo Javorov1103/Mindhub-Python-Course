@@ -68,5 +68,25 @@ def next_shape():
             c.create_text(200,200, text='Draw')
         c.pack()
         
-
-
+def snap(event):
+    global shape
+    global player1_score
+    global player2_score
+    
+    valid = False
+    
+    c.delete(shape)
+    
+    if previous_color == current_color:
+        valid = True
+    if valid:
+        if event.char == 'q':
+            player1_score = player1_score +1
+        else:
+            player2_score = player2_score+1
+            
+        shape = c.create_text(200,200, text='SNAP!, You score 1 point!')
+    else:
+            
+        
+            
