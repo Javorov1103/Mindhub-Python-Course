@@ -22,6 +22,8 @@ read_from_file('05.12.2022/capitals_data.txt')
 
 while True:
     query_country = simpledialog.askstring('Country','Type the name of a country')
+    if(query_country == None):
+        break
     if query_country in the_world:
         result = the_world[query_country]
         messagebox.showinfo('Answer', f'The capital city of {query_country} is {result} !')
@@ -29,4 +31,5 @@ while True:
         new_city = simpledialog.askstring("Teach me", f"I don't know the capital of {query_country}. Tell me which is the capital")
         the_world[query_country] = new_city
         write_to_file(query_country, new_city, '05.12.2022/capitals_data.txt')
+
         
