@@ -47,8 +47,8 @@ def game_over():
 def display_score(current_score):
     score_turtle.clear()
     score_turtle.penup()
-    x = (t.window_width/2)-50
-    y = (t.window_width/2)-50
+    x = (t.window_width()/2)-50
+    y = (t.window_width()/2)-50
     score_turtle.setpos(x,y)
     score_turtle.write(str(current_score), align='right', font=('Arial',40,'bold'))
     
@@ -86,15 +86,23 @@ def start_game():
             break
     
 def move_up():
-    pass
+    if snake.heading() == 0 or snake.heading == 180:
+        snake.setheading(90)
 def move_down():
-    pass
+    if snake.heading() == 0 or snake.heading == 180:
+        snake.setheading(270)
 def move_left():
-    pass
+    if snake.heading() == 90 or snake.heading == 270:
+        snake.setheading(180)
 def move_right():
-    pass
+    if snake.heading() == 90 or snake.heading == 270:
+        snake.setheading(0)
 
 t.onkey(start_game,'space')
+t.onkey(move_up, 'Up')
+t.onkey(move_down, 'Down')
+t.onkey(move_left, 'Left')
+t.onkey(move_right, 'Right')
 t.listen()
 t.mainloop()
 
