@@ -30,7 +30,33 @@ def lose_a_life():
     lives_remaining = lives_remaining - 1
     c.itemconfigure(lives_text, text=f'Lives: {lives_remaining}')
 
+def check_catch():
+    (catcher_x,catcher_y,catcher_x2,catcher_y2) = c.coords(catcher)
+    for egg in eggs:
+        (egg_x,egg_y,egg_x2,egg_y2) = c.coords(egg)
+        if(catcher_x < egg_x and egg_x2 < catcher_x2 and catcher_y2 - egg_y2 < 40):
+            eggs.remove(egg)
+            c.delete(egg)
+            increase_score(egg_score)
+    root.after(100, check_catch)
     
+def increase_score(points):
+    global score, egg_speed, egg_interval
+    score = score + points
+    egg_speed = int(egg_speed + difficulty_factor)
+    egg_interval = int(egg_interval*difficulty_factor)
+    c.itemconfigure(score_text, text=f'Score: {str(score)}')
+    
+def move_left(event):
+    (x1,y1,x2,y2)=c.coords(catcher)
+    if(x1>0):
+        c.move(catcher, -20,0)
+def move_right(event):
+    (x1,y1,x2,y2)=c.coords(catcher)
+    if x2 < canvas_width:
+        c.move(catcher,20,0)
+        
+
 eggs=[]
 canvas_width = 800
 canvas_height = 400
@@ -67,6 +93,14 @@ score_text = c.create_text(10,10,anchor='nw', font=game_font,fill='darkblue', \
 lives_remaining = 3
 lives_text = c.create_text(canvas_width - 10,10,anchor='ne', font=game_font,fill='darkblue', \
     text="Live "+str(lives_remaining))
+
+c.bind('<Left>', move_left)
+c.bind('<Right>', move_right)
+c.focus_set()
+
+root.after(1000, create_egg)
+root.after(1000,move_eggs)
+root.after(1000, check_catch)
 
 c.pack()
 root.mainloop()
