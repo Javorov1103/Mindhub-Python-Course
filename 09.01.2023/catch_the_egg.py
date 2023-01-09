@@ -2,6 +2,36 @@ from itertools import cycle
 from random import randrange
 from tkinter import Canvas, Tk,messagebox,font
 
+def create_egg():
+    x = randrange(10,740)
+    y = 40
+    new_egg = c.create_oval(x,y,x + egg_width, y+egg_height, fill=next(color_cycle),width=0)
+    eggs.append(new_egg)
+    root.after(egg_interval,create_egg)
+
+def move_eggs():
+    for egg in eggs:
+        (egg_x, egg_y, egg_x2, egg_y2) = c.coords(egg)
+        c.move(egg, 0,10)
+        if(egg_y2 > canvas_height):
+            egg_dropped(egg)
+    root.after(egg_speed, move_eggs)
+    
+def egg_dropped(egg):
+    eggs.remove(egg)
+    c.delete(egg)
+    lose_a_life()
+    if lives_remaining == 0:
+        messagebox.showinfo('Game over!', f'Final score: {str(score)}')
+        root.destroy()
+
+def lose_a_life():
+    global lives_remaining
+    lives_remaining = lives_remaining - 1
+    c.itemconfigure(lives_text, text=f'Lives: {lives_remaining}')
+
+    
+eggs=[]
 canvas_width = 800
 canvas_height = 400
 
