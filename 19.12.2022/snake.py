@@ -57,6 +57,7 @@ def place_leaf():
     leaf.setx(random.randint(-200,2000))
     leaf.sety(random.randint(-200,200))
     leaf.st()
+    
 def start_game():
     global game_started
     if game_started:
@@ -86,16 +87,16 @@ def start_game():
             break
     
 def move_up():
-    if snake.heading() == 0 or snake.heading == 180:
+    if snake.heading() == 0 or snake.heading() == 180:
         snake.setheading(90)
 def move_down():
-    if snake.heading() == 0 or snake.heading == 180:
+    if snake.heading() == 0 or snake.heading() == 180:
         snake.setheading(270)
 def move_left():
-    if snake.heading() == 90 or snake.heading == 270:
+    if snake.heading() == 90 or snake.heading() == 270:
         snake.setheading(180)
 def move_right():
-    if snake.heading() == 90 or snake.heading == 270:
+    if snake.heading() == 90 or snake.heading ()== 270:
         snake.setheading(0)
 
 t.onkey(start_game,'space')
