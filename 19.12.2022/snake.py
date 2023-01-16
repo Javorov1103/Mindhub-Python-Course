@@ -54,7 +54,7 @@ def display_score(current_score):
     
 def place_leaf():
     leaf.ht()
-    leaf.setx(random.randint(-200,2000))
+    leaf.setx(random.randint(-200,200))
     leaf.sety(random.randint(-200,200))
     leaf.st()
     
